@@ -15,4 +15,11 @@ class Player:
         """
         
         self.name = name
+
+class ComputerPlayer:
+    """The computer as a player.
     
+    Attributes:
+        names(str): the player's name.
+        cards(str or list): the lists of cards that the computer will get cards from.
+    """
