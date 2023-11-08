@@ -27,30 +27,6 @@ class Player:
         
         self.name = name
 
-personal_hand = [
-          {"Type" : "Number",
-          "Color" : "Blue",
-          "Number" : 1,
-          "Function" : "None"},
-         
-         {"Type" : "Number",
-          "Color" : "Blue",
-          "Number" : 1,
-          "Function" : "None"},
-         
-         {"Type" : "Number",
-          "Color" : "Blue",
-          "Number" : 1,
-          "Function" : "None"}
-    
-            ]
-
-computer1 = ComputerPlayer(name,personal_hand)
-
-player1 = Player(name,personal_hand)
-
-
-
 class ComputerPlayer:
     """The computer as a player.
     
@@ -68,7 +44,7 @@ class ComputerPlayer:
         self.computer = computer
         self.hand = hand
 
-class GameState:
+class Game:
     
     def __init__(self, player, card, hand, clockwise):
         self.player = player
