@@ -51,18 +51,6 @@ class Game:
         self.player = player
         self.card = card
         self.hand = hand
-        self.clockwise = clockwise
-        self.clockwise = True
-        
-    def skip_turn(self):
-        if self.card == "Skip":
-            self.player[i] += 1 
-            return print(f"{self.name} has been skipped!")
-        
-    def reverse_turn(self):
-        if self.card == "Reverse":
-            self.clockwise = False
-            return print(f"{self.name} has used a reverse card!")
         
     def drawing_cards(self,drawing_cards,table_cards):
         """Drawing cards if player finds no match. 
