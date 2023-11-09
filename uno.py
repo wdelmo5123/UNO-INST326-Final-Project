@@ -13,6 +13,18 @@ f = open('deck2_cards.json')
 drawing_cards = json.load(f)
 random.shuffle(drawing_cards)
 
+def sort_cards(cards):
+    def card_key(card):
+        #Extract the relevant attributes from the card dictionary 
+        card_type = card['Type']
+        card_color = card['Color']       
+        card_number = card.get('Number')
+        card_function = card.get('Function', 'None')
+        return (card_type, card_color, card_number, card_function)
+
+    sorted_cards = dict(sorted(cards.items(), key=lambda item: card_key(item[1])))
+    return sorted_cards
+
 
 class Player:
     """Tracks the names of the player in Uno.
