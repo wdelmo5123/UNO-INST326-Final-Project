@@ -2,13 +2,16 @@
 import json
 import random
 
-f = open('card_data.json')
-table_cards = json.load(f)
-drawing_cards = json.load(f)
 
-# Shuffling both decks
-random.shuffle(drawing_cards)
+# List of cards, where card on top is card to match
+f = open('cards.json')
+table_cards = json.load(f)
 random.shuffle(table_cards)
+
+# List of cards to draw from 
+f = open('deck2_cards.json')
+drawing_cards = json.load(f)
+random.shuffle(drawing_cards)
 
 
 class Player:
@@ -23,6 +26,7 @@ class Player:
 
         Args:
             name (str): name of Player
+            hand (list): list of dictionaries (cards) the player has
         """
         
         self.name = name
@@ -33,26 +37,26 @@ class ComputerPlayer:
     
     Attributes:
         names(str): the player's name.
-        cards(str or list): the lists of cards that the computer will get cards from.
+        cards(list): the lists of cards that the computer will get cards from.
     """
-    def __init__(self,computer, hand):
+    def __init__(self, name, hand):
         """ Initialize Player Object
 
         Args:
             name (str): name of Player
+            hand (list): list of dictionaries (cards) the player has
         """
         
-        self.computer = computer
+        self.name = name
         self.hand = hand
 
 class Game:
     
-    def __init__(self, player, card, hand):
+    def __init__(self, player, hand):
         self.player = player
-        self.card = card
         self.hand = hand
         
-    def drawing_cards(self,drawing_cards,table_cards):
+    def drawing(self,drawing_cards,table_cards):
         """Drawing cards if player finds no match. 
         
            Ideally, you would have one deck of cards to 
@@ -60,17 +64,16 @@ class Game:
            create the personal hand for players, 
            and the card on top would be the first card to match.
            
-           Ideally, personal hand would also be an argument of the function.
-           In this case, a personal hand is initialized.
+           In the future, personal hand would also be an argument of the function.
+           In this example, a personal hand is initialized.
            
-           In this function, drawing_cards and table_cards are treated as
+           Within this function, drawing_cards and table_cards are treated as
            separate decks.
            
-           Technically, this function has the player play by themselves. 
+           For now, the function has the player play by themselves. 
            Where each round, the card on top of table_cards is the card to match.
            
             
-
         Args:
             drawing_cards (lst): list of cards to draw from 
             table_cards (lst): list of cards, where card on top is card to match
@@ -156,8 +159,6 @@ class Game:
                 print(f"Your matched card is {matched_cards}\n")
             elif len(matched_cards) > 1:
                 print(f"Your matched cards are {matched_cards}\n")
-            
-            print(f"Card to match is {card_on_table}\n")
 
             # Selecting a card from matched cards to play
             while matched_cards and count < 1 and (0 <= card_position <= len(matched_cards)):
@@ -183,11 +184,13 @@ class Game:
         """A method that allows the player to reverse the order of who goes next. 
 
         Args:
-            card_on_table (lst): A list of dictionaries containing the card deck for Uno. Each dictionary describes the type, color, number, and function of 
-                each individual card.
+            card_on_table (lst): A list of dictionaries containing the card deck for Uno. 
+                                Each dictionary describes the type, color, number, and function of 
+                                    each individual card.
 
         Returns:
-            lst: An updated version of "players" list with the updated order of who goes next. This is applicable for a 2 player game of 1 player versus a computer bot. 
+            lst: An updated version of "players" list with the updated order of who goes next. 
+            This is applicable for a 2 player game of 1 player versus a computer bot. 
         """
         
         # An example of the player's hand for this function
@@ -202,7 +205,8 @@ class Game:
         c = "Color"
         f = "Function"
         
-        # This shows what card is on the table, so the player can determine which card to play. If a card matches with the card on the table, it will go into the matched_cards list
+        # This shows what card is on the table, so the player can determine which card to play.
+        # If a card matches with the card on the table, it will go into the matched_cards list
         card_on_table = table_cards.pop(0)
         matched_cards = []
         
@@ -212,11 +216,13 @@ class Game:
         # This looks into the specific card on the player's hand
         for card in player_hand:
         
-        # This checks if the card from the player's hand matches with the card table based on the same color. The matched card will go into the matched_cards list
+        # This checks if the card from the player's hand matches with the card 
+        # table based on the same color. The matched card will go into the matched_cards list
             if card[c] == card_on_table[c]:
                 matched_cards.append(card)
                 
-        # This looks at the matched card just added, which will reverse the order if the function of that card matches with reverse cards
+        # This looks at the matched card just added, which will reverse the order 
+        # if the function of that card matches with reverse cards
                 for card in matched_cards:
                     if card[f] == "Reverse":
                         print(f"{players[0]} has reversed the game order!")
@@ -224,11 +230,13 @@ class Game:
                     else:
                         print("This card doesn't reverse!")
         
-        # This checks if the card from the player's hand matches with the card table based on the same function. The matched card will go into the matched_cards list
+        # This checks if the card from the player's hand matches with the card 
+        # table based on the same function. The matched card will go into the matched_cards list
             elif card[f] == card_on_table[f]:
                 matched_cards.append(card)
         
-        # This looks at the matched card just added, which will reverse the order if the function of that card matches with reverse cards
+        # This looks at the matched card just added, which will reverse the 
+        # order if the function of that card matches with reverse cards
                 for card in matched_cards:
                     if card[f] == "Reverse":
                         print(f"{players[0]} has reversed the game order!")
@@ -239,3 +247,12 @@ class Game:
         # If the card in the player's hand doesn't match with the card on the table
             else:
                 return print("This card doesn't reverse!")
+
+
+g1 = Game("player", "personal_hand")
+
+# Calling the reverse method
+g1.reverse(table_cards.pop(0))
+
+# Calling the drawing method
+g1.drawing(drawing_cards,table_cards)
