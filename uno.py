@@ -179,4 +179,63 @@ class Game:
         if len(personal_hand) == 0:
             print("Game is done. You win!")
 
+    def reverse(self, card_on_table):
+        """A method that allows the player to reverse the order of who goes next. 
 
+        Args:
+            card_on_table (lst): A list of dictionaries containing the card deck for Uno. Each dictionary describes the type, color, number, and function of 
+                each individual card.
+
+        Returns:
+            lst: An updated version of "players" list with the updated order of who goes next. This is applicable for a 2 player game of 1 player versus a computer bot. 
+        """
+        
+        # An example of the player's hand for this function
+        player_hand = [
+        {"Type" : "Reverse",
+        "Color" : "Red",
+        "Number" : "None",
+        "Function" : "Reverse"}
+        ]
+        
+        # Setting up the color and function variables for matching with the cards on the table
+        c = "Color"
+        f = "Function"
+        
+        # This shows what card is on the table, so the player can determine which card to play. If a card matches with the card on the table, it will go into the matched_cards list
+        card_on_table = table_cards.pop(0)
+        matched_cards = []
+        
+        # This shows the playing order of who goes first to last
+        players = ["Player1", "Player2", "Player3", "Player4"]
+        
+        # This looks into the specific card on the player's hand
+        for card in player_hand:
+        
+        # This checks if the card from the player's hand matches with the card table based on the same color. The matched card will go into the matched_cards list
+            if card[c] == card_on_table[c]:
+                matched_cards.append(card)
+                
+        # This looks at the matched card just added, which will reverse the order if the function of that card matches with reverse cards
+                for card in matched_cards:
+                    if card[f] == "Reverse":
+                        print(f"{players[0]} has reversed the game order!")
+                        return players.reverse()
+                    else:
+                        print("This card doesn't reverse!")
+        
+        # This checks if the card from the player's hand matches with the card table based on the same function. The matched card will go into the matched_cards list
+            elif card[f] == card_on_table[f]:
+                matched_cards.append(card)
+        
+        # This looks at the matched card just added, which will reverse the order if the function of that card matches with reverse cards
+                for card in matched_cards:
+                    if card[f] == "Reverse":
+                        print(f"{players[0]} has reversed the game order!")
+                        return players.reverse()
+                    else:
+                        print("This card doesn't reverse!")
+                        
+        # If the card in the player's hand doesn't match with the card on the table
+            else:
+                return print("This card doesn't reverse!")
