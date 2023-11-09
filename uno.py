@@ -13,18 +13,6 @@ f = open('deck2_cards.json')
 drawing_cards = json.load(f)
 random.shuffle(drawing_cards)
 
-def sort_cards(cards):
-    def card_key(card):
-        #Extract the relevant attributes from the card dictionary 
-        card_type = card['Type']
-        card_color = card['Color']       
-        card_number = card.get('Number')
-        card_function = card.get('Function', 'None')
-        return (card_type, card_color, card_number, card_function)
-
-    sorted_cards = dict(sorted(cards.items(), key=lambda item: card_key(item[1])))
-    return sorted_cards
-
 
 class Player:
     """Tracks the names of the player in Uno.
@@ -191,6 +179,32 @@ class Game:
         # When user runs out of cards, game is finished
         if len(personal_hand) == 0:
             print("Game is done. You win!")
+            
+            
+    def sort_cards(cards):
+        """Sorts a dictionary of cards based on specified attributes.
+           
+        Args:
+            cards(dict): A dictionary containing card attributes such as 'Type', 'Color', 'Number', and 'Function'. 
+        Returns:
+            dict: A new dictionary containing the sorted cards based on the specified attributes.
+           
+        """
+        def card_key(card):
+        #Extract the relevant attributes from the card dictionary 
+            card_type = card['Type']
+            card_color = card['Color']
+            # Use get() to handle cases where 'Number' is not present in the card dictionary       
+            card_number = card.get('Number') 
+            # Use get() to handle cases where 'Function' is not present in the card dictionary 
+            # Default to 'None' if 'Function' is not present
+            card_function = card.get('Function', 'None')
+            # Return a tuple containing the extracted attributes for comparison during sorting
+            return (card_type, card_color, card_number, card_function)
+        #Sorts the card dictionary based on extracted attributes
+        sorted_cards = dict(sorted(cards.items(), key=lambda item: card_key(item[1])))
+        #Return the sorted dictionary of cards
+        return sorted_cards
 
     def reverse(self, card_on_table):
         """A method that allows the player to reverse the order of who goes next. 
