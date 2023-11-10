@@ -163,7 +163,7 @@ class Game:
             # Selecting a card from matched cards to play
             while matched_cards and count < 1 and (0 <= card_position <= len(matched_cards)):
                 count+=1
-                position = input(f"Which card do you want to play? Select card position:")
+                position = input(f"Which card do you want to play? From matched cards, select card position:")
                 card_position = int(position)
                 while card_position > (len(matched_cards)):
                     position = input(f"Please select a card position less than or equal to {len(matched_cards)}:")
@@ -181,7 +181,7 @@ class Game:
             print("Game is done. You win!")
             
             
-    def sort_cards(cards):
+    def sort_cards(self,cards):
         """Sorts a dictionary of cards based on specified attributes.
            
         Args:
@@ -277,8 +277,24 @@ class Game:
 
 g1 = Game("player", "personal_hand")
 
+# Calling the drawing method
+g1.drawing(drawing_cards,table_cards)
+
 # Calling the reverse method
 g1.reverse(table_cards.pop(0))
 
-# Calling the drawing method
-g1.drawing(drawing_cards,table_cards)
+
+# Testing out whether a dictionary of dictionaries
+# would be a better datatype for a deck of cards
+unsorted_hand = {
+'card1': {'Type': 'Number', 'Color': 'Blue', 'Number': 5, 'Function': 'None' },
+'card2': {'Type': 'Number','Color': 'Blue','Number': 7,'Function': 'None'},
+'card3': {'Type': 'Wildcard', 'Color': 'Wild', 'Function': 'Reverse'}
+}     
+
+# Calling the sorting method
+sorted_cards = g1.sort_cards(unsorted_hand)
+print(f"Sorted cards are {sorted_cards}")
+
+
+
