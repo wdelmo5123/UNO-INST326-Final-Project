@@ -3,15 +3,9 @@ import json
 import random
 
 
-# List of cards, where card on top is card to match
+# List of cards
 f = open('cards.json')
-table_cards = json.load(f)
-random.shuffle(table_cards)
-
-# List of cards to draw from 
-f = open('deck2_cards.json')
-drawing_cards = json.load(f)
-random.shuffle(drawing_cards)
+deck = json.load(f)
 
 
 class Player:
@@ -19,6 +13,7 @@ class Player:
 
         Attributes:
         name(str): the player's name. 
+        hand (lst): the personal hand
     """
     
     def __init__(self,name, hand):
@@ -31,77 +26,23 @@ class Player:
         
         self.name = name
         self.hand = hand 
-
-class ComputerPlayer:
-    """The computer as a player.
-    
-    Attributes:
-        names(str): the player's name.
-        cards(list): the lists of cards that the computer will get cards from.
-    """
-    def __init__(self, name, hand):
-        """ Initialize Player Object
-
+        
+    def __cardchoice__(self,state):
+        """ 
+        
         Args:
-            name (str): name of Player
-            hand (list): list of dictionaries (cards) the player has
-        """
-        
-        self.name = name
-        self.hand = hand
-
-class Game:
-    
-    def __init__(self, player, hand):
-        self.player = player
-        self.hand = hand
-        
-    def drawing(self,drawing_cards,table_cards):
-        """Drawing cards if player finds no match. 
-        
-           Ideally, you would have one deck of cards to 
-           first shuffle through
-           create the personal hand for players, 
-           and the card on top would be the first card to match.
-           
-           In the future, personal hand would also be an argument of the function.
-           In this example, a personal hand is initialized.
-           
-           Within this function, drawing_cards and table_cards are treated as
-           separate decks.
-           
-           For now, the function has the player play by themselves. 
-           Where each round, the card on top of table_cards is the card to match.
-           
+            state (str): Describing the card on the table, the drawing deck. 
             
-        Args:
-            drawing_cards (lst): list of cards to draw from 
-            table_cards (lst): list of cards, where card on top is card to match
+        Returns:
+            card (dict): A matched card that will be appended to the matched pile
         """
+        # One Turn
+        # Player selects card to match card on table
         
-        # Temporarily initializing a personal hand 
-        personal_hand = [
-          {"Type" : "Number",
-          "Color" : "Blue",
-          "Number" : 1,
-          "Function" : "None"},
-         
-         {"Type" : "Number",
-          "Color" : "Blue",
-          "Number" : 1,
-          "Function" : "None"},
-         
-         {"Type" : "Number",
-          "Color" : "Blue",
-          "Number" : 1,
-          "Function" : "None"}
+        print(state)
+        print(f"Your Personal Hand is {self.hand}")
     
-            ]
-        
-        game = 0
-        while len(personal_hand) > 0:
-            game+=1
-            print(f"\nThis is Round #{game}")
+        while len(self.hand) > 0:
 
             c = "Color"
             n = "Number"
@@ -180,6 +121,52 @@ class Game:
         if len(personal_hand) == 0:
             print("Game is done. You win!")
             
+        
+    
+        
+class HumanPlayer:
+    """Tracks the names of the player in Uno.
+
+        Attributes:
+        name(str): the player's name. 
+        hand (lst): the personal hand
+    """
+    
+    def __init__(self,name, hand):
+        """ Initialize Player Object
+
+        Args:
+            name (str): name of Player
+            hand (list): list of dictionaries (cards) the player has
+        """
+        
+        self.name = name
+        self.hand = hand 
+
+class ComputerPlayer:
+    """The computer as a player.
+    
+    Attributes:
+        names(str): the player's name.
+        cards(list): the lists of cards that the computer will get cards from.
+    """
+    def __init__(self, name, hand):
+        """ Initialize Player Object
+
+        Args:
+            name (str): name of Player
+            hand (list): list of dictionaries (cards) the player has
+        """
+        
+        self.name = name
+        self.hand = hand
+
+class Game:
+    
+    def __init__(self, player, hand):
+        self.player = player
+        self.hand = hand
+        
             
     def sort_cards(self,cards):
         """Sorts a dictionary of cards based on specified attributes.
@@ -274,6 +261,23 @@ class Game:
             else:
                 return print("This card doesn't reverse!")
 
+
+
+class Game:
+    """Provide information on the current state of the game. Used in the
+    Player.card_choice() method.
+    
+    Attributes:
+    draw_pile(lst): deck of cards from which the player draws cards from
+    match_pile(lst): deck of cards which players have matched
+    hand_amt (int): 
+    
+    
+    
+    
+    """
+    
+    
 
 g1 = Game("player", "personal_hand")
 
