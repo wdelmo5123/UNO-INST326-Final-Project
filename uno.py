@@ -14,6 +14,7 @@ class Player:
         Attributes:
         name(str): the player's name. 
         hand (lst): the personal hand
+        hand_amt (int): amount of cards the player has
     """
     
     def __init__(self,name, hand):
@@ -22,16 +23,18 @@ class Player:
         Args:
             name (str): name of Player
             hand (list): list of dictionaries (cards) the player has
+            hand_amt (int): amount of cards the player has
         """
         
         self.name = name
         self.hand = hand 
         
-    def __cardchoice__(self,state):
+    def cardchoice(self,match_pile,draw_pile,state):
         """ 
         
         Args:
-            state (str): Describing the card on the table, the drawing deck. 
+            state (str): Describing the card on the table, the drawing deck,
+            the amount of cards other people have. 
             
         Returns:
             card (dict): A matched card that will be appended to the matched pile
@@ -51,16 +54,16 @@ class Player:
             cards_added = 0
 
             # Take card on top of table to match
-            card_on_table = table_cards.pop(0)
+            card_on_table = match_pile.pop(0)
             print(f"Card is {card_on_table}\n")
 
             # List of matched cards
             matched_cards = []
 
-            print(f"\nPersonal Hand is {personal_hand}\n")
+            print(f"\nPersonal Hand is {self.hand}\n")
             
             # Checks each card in personal hand if it matches card on table
-            for card1 in personal_hand:
+            for card1 in self.hand:
                 if card1[c] == card_on_table[c]:
                     print(f"Found Color Match for color {card1[c]}\n")
                     matched_cards.append(card1)
@@ -75,7 +78,7 @@ class Player:
             # When cards in personal hand do not match, cards are drawn to match
             if len(matched_cards) == 0:
                 print(f"Currently drawing more cards")  
-                for card1 in drawing_cards:
+                for card1 in draw_pile:
                     if card1[c] == card_on_table[c]:
                         print(f"Found Color Match for color {card1[c]}")
                         matched_cards.append(card1)
@@ -88,11 +91,11 @@ class Player:
                         break
                     else:
                         print(f"Card drawn is not a match. Adding to Personal Hand... ")
-                        personal_hand.append(card1)
+                        self.hand.append(card1)
                         cards_added+=1
 
-            print(f"\nPersonal Hand is now {personal_hand}\n")
-            print(f"\nYour Personal hand has {len(personal_hand)} cards\n")
+            print(f"\nPersonal Hand is now {self.hand}\n")
+            print(f"\nYour Personal hand has {len(self.hand)} cards\n")
             print(f"You drew {cards_added} more cards to your personal hand\n")
 
             # Printing the player's matched cards
@@ -110,26 +113,16 @@ class Player:
                     position = input(f"Please select a card position less than or equal to {len(matched_cards)}:")
                     card_position = int(position)
                 print(f"\nTo match the card: {card_on_table}, the card selected is {matched_cards[card_position-1]}")
-                if matched_cards[card_position-1][c] == card_on_table[c]:
-                    print(f"\nThey have the same color: {card_on_table[c]}")
-                elif matched_cards[card_position-1][n] == card_on_table[n]:
-                    print(f"\nThey have the same number: {card_on_table[n]}")
-                if matched_cards[card_position-1] in personal_hand:
-                    personal_hand.remove(matched_cards[card_position-1])
-        
-        # When user runs out of cards, game is finished
-        if len(personal_hand) == 0:
-            print("Game is done. You win!")
-            
-        
+                return matched_cards[card_position-1]     
     
         
-class HumanPlayer:
+class HumanPlayer(Player):
     """Tracks the names of the player in Uno.
 
         Attributes:
         name(str): the player's name. 
         hand (lst): the personal hand
+        hand_amt (int): amount of cards the player has
     """
     
     def __init__(self,name, hand):
@@ -142,6 +135,10 @@ class HumanPlayer:
         
         self.name = name
         self.hand = hand 
+        self.hand_amt = len(self.hand)
+        
+# player1 = HumanPlayer("Mark", [Red1, Green2, Blue4, Skip])
+# card = player1.cardchoice(match_pile,draw_pile,state)
 
 class ComputerPlayer:
     """The computer as a player.
@@ -149,6 +146,7 @@ class ComputerPlayer:
     Attributes:
         names(str): the player's name.
         cards(list): the lists of cards that the computer will get cards from.
+        hand_amt (int): amount of cards the player has
     """
     def __init__(self, name, hand):
         """ Initialize Player Object
@@ -156,112 +154,12 @@ class ComputerPlayer:
         Args:
             name (str): name of Player
             hand (list): list of dictionaries (cards) the player has
+            hand_amt (int): amount of cards the player has
         """
         
         self.name = name
         self.hand = hand
-
-class Game:
-    
-    def __init__(self, player, hand):
-        self.player = player
-        self.hand = hand
-        
-            
-    def sort_cards(self,cards):
-        """Sorts a dictionary of cards based on specified attributes.
-           
-        Args:
-            cards(dict): A dictionary containing card attributes such as 'Type', 'Color', 'Number', and 'Function'. 
-        Returns:
-            dict: A new dictionary containing the sorted cards based on the specified attributes.
-           
-        """
-        def card_key(card):
-        #Extract the relevant attributes from the card dictionary 
-            card_type = card['Type']
-            card_color = card['Color']
-            # Use get() to handle cases where 'Number' is not present in the card dictionary       
-            card_number = card.get('Number') 
-            # Use get() to handle cases where 'Function' is not present in the card dictionary 
-            # Default to 'None' if 'Function' is not present
-            card_function = card.get('Function', 'None')
-            # Return a tuple containing the extracted attributes for comparison during sorting
-            return (card_type, card_color, card_number, card_function)
-        #Sorts the card dictionary based on extracted attributes
-        sorted_cards = dict(sorted(cards.items(), key=lambda item: card_key(item[1])))
-        #Return the sorted dictionary of cards
-        return sorted_cards
-
-    def reverse(self, card_on_table):
-        """A method that allows the player to reverse the order of who goes next. 
-
-        Args:
-            card_on_table (lst): A list of dictionaries containing the card deck for Uno. 
-                                Each dictionary describes the type, color, number, and function of 
-                                    each individual card.
-
-        Returns:
-            lst: An updated version of "players" list with the updated order of who goes next. 
-            This is applicable for a 2 player game of 1 player versus a computer bot. 
-        """
-        
-        # An example of the player's hand for this function
-        player_hand = [
-        {"Type" : "Reverse",
-        "Color" : "Red",
-        "Number" : "None",
-        "Function" : "Reverse"}
-        ]
-        
-        # Setting up the color and function variables for matching with the cards on the table
-        c = "Color"
-        f = "Function"
-        
-        # This shows what card is on the table, so the player can determine which card to play.
-        # If a card matches with the card on the table, it will go into the matched_cards list
-        card_on_table = table_cards.pop(0)
-        matched_cards = []
-        
-        # This shows the playing order of who goes first to last
-        players = ["Player1", "Player2", "Player3", "Player4"]
-        
-        # This looks into the specific card on the player's hand
-        for card in player_hand:
-        
-        # This checks if the card from the player's hand matches with the card 
-        # table based on the same color. The matched card will go into the matched_cards list
-            if card[c] == card_on_table[c]:
-                matched_cards.append(card)
-                
-        # This looks at the matched card just added, which will reverse the order 
-        # if the function of that card matches with reverse cards
-                for card in matched_cards:
-                    if card[f] == "Reverse":
-                        print(f"{players[0]} has reversed the game order!")
-                        return players.reverse()
-                    else:
-                        print("This card doesn't reverse!")
-        
-        # This checks if the card from the player's hand matches with the card 
-        # table based on the same function. The matched card will go into the matched_cards list
-            elif card[f] == card_on_table[f]:
-                matched_cards.append(card)
-        
-        # This looks at the matched card just added, which will reverse the 
-        # order if the function of that card matches with reverse cards
-                for card in matched_cards:
-                    if card[f] == "Reverse":
-                        print(f"{players[0]} has reversed the game order!")
-                        return players.reverse()
-                    else:
-                        print("This card doesn't reverse!")
-                        
-        # If the card in the player's hand doesn't match with the card on the table
-            else:
-                return print("This card doesn't reverse!")
-
-
+        self.hand_amt = len(self.hand)
 
 class Game:
     """Provide information on the current state of the game. Used in the
@@ -270,35 +168,14 @@ class Game:
     Attributes:
     draw_pile(lst): deck of cards from which the player draws cards from
     match_pile(lst): deck of cards which players have matched
-    hand_amt (int): 
-    
-    
-    
+    hand_amt (int): amount of cards the player has
     
     """
     
-    
+    def __init__(self, player, hand):
+        self.player = player
+        self.hand = hand
 
-g1 = Game("player", "personal_hand")
-
-# Calling the drawing method
-g1.drawing(drawing_cards,table_cards)
-
-# Calling the reverse method
-g1.reverse(table_cards.pop(0))
-
-
-# Testing out whether a dictionary of dictionaries
-# would be a better datatype for a deck of cards
-unsorted_hand = {
-'card1': {'Type': 'Number', 'Color': 'Blue', 'Number': 5, 'Function': 'None' },
-'card2': {'Type': 'Number','Color': 'Blue','Number': 7,'Function': 'None'},
-'card3': {'Type': 'Wildcard', 'Color': 'Wild', 'Function': 'Reverse'}
-}     
-
-# Calling the sorting method
-sorted_cards = g1.sort_cards(unsorted_hand)
-print(f"Sorted cards are {sorted_cards}")
 
 
 
