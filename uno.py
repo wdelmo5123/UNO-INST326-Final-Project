@@ -1,7 +1,8 @@
 """A game of Uno against the computer."""
 import json
 import random
-
+from argparse import ArgumentParser
+import sys
 
 # List of cards
 f = open('cards.json')
@@ -373,3 +374,41 @@ class Game:
                             print(f"{player.name} wins!")
                             break
 
+def main(filepath):
+    """ Set up and play a game of uno.
+
+    Args:
+        filepath (str): path to the JSON file containing the uno cards.
+        """
+
+    with open(filepath, "r", encoding = "utf-8") as f:
+            deck = json.load(f)
+
+    human_player = HumanPlayer(name= "Steven")
+    computer_player = ComputerPlayer(name= "Computer")
+
+    game = Game(players = [human_player, computer_player], deck = deck, direction = "Clockwise")
+    # Initialize the players' hands
+    game.distribute_cards(player_list=[human_player, computer_player], deck=deck)
+
+    # Play the tournament
+    game.tournament(player_list=[human_player, computer_player], draw_pile=deck.copy(), match_pile=[], direction = "Clockwise")
+
+def parse_args(arglist):
+    """ Parse command-line arguments.
+
+    Args:
+        arglist (list of str): arguments from the command line
+
+    Returns:
+        namespace: the parsed arguments as a namespace.  
+    """
+    parser = ArgumentParser(description = "A game of uno against the computer")
+    parser.add_argument("players", type = int, default = 2, help = "Number of players in the game (default: 2)")
+    parser.add_argument("deck", type = str, default = "cards.json", 
+                        help = "Path to JSON file containig the UNO card deck (default: card.json)")
+    return parser.parse_args(arglist)
+
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    main(args.deck) 
