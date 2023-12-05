@@ -124,7 +124,7 @@ class HumanPlayer:
                 while card_position > (len(matched_cards)):
                     position = input(f"Please select a card position less than or equal to {len(matched_cards)}:")
                     card_position = int(position)
-                print(f"\nTo match the card: {card_on_table}, the card selected is {matched_cards[card_position-1]}")
+                print(f"\nTo match the card: {card_on_table}, the card selected is {matched_cards[card_position]}")
                 match_pile.append(matched_cards[card_position])  
                 if matched_cards[card_position] in self.hand:
                     self.hand.remove(matched_cards[card_position])
@@ -246,7 +246,7 @@ class ComputerPlayer:
                     print(f"Which card do you want to play? From matched cards, select card position:")
                     position = random.randint(0, len(matched_cards))
                     card_position = int(position)
-                print(f"\nTo match the card: {card_on_table}, the card selected is {matched_cards[card_position-1]}")
+                print(f"\nTo match the card: {card_on_table}, the card selected is {matched_cards[card_position]}")
                 match_pile.append(matched_cards[card_position])
                 if matched_cards[card_position] in self.hand:
                     self.hand.remove(matched_cards[card_position])
@@ -309,4 +309,3 @@ class Game:
                             print(f"{player.name} wins!")
                             break
 
-        
