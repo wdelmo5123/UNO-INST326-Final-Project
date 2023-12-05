@@ -7,7 +7,6 @@ import random
 f = open('cards.json')
 deck = json.load(f)
 
-
 class HumanPlayer:
     """Tracks the names of the player in Uno.
 
@@ -17,7 +16,7 @@ class HumanPlayer:
         hand_amt (int): amount of cards the player has
     """
     
-    def __init__(self,name, hand=[]):
+    def __init__(self,name, hand=None):
         """ Initialize Player Object
 
         Args:
@@ -27,8 +26,7 @@ class HumanPlayer:
         """
         
         self.name = name
-        self.hand = hand 
-        self.hand_amt = len(self.hand)
+        self.hand = hand if hand is not None else []
         
     def cardchoice(self,match_pile,draw_pile):
         """ 
@@ -43,7 +41,13 @@ class HumanPlayer:
         # One Turn
         # Player selects card to match card on table
         
-        print(f"Your Personal Hand is {self.hand}")
+        
+        if len(self.hand) == 1:
+            # Play the only available card in the hand
+            card = self.hand[0]
+            match_pile.append(card)  
+            if card in self.hand:
+                self.hand.remove(card)
     
         while len(self.hand) > 0:
 
@@ -124,10 +128,10 @@ class HumanPlayer:
                 match_pile.append(matched_cards[card_position])  
                 if matched_cards[card_position] in self.hand:
                     self.hand.remove(matched_cards[card_position])
-                return matched_cards[card_position]      
-    
+                return matched_cards[card_position]  
+            
         
-class ComputerPlayer(HumanPlayer):
+class ComputerPlayer:
     """Tracks the names of the player in Uno.
 
         Attributes:
@@ -135,6 +139,19 @@ class ComputerPlayer(HumanPlayer):
         hand (lst): the personal hand
         hand_amt (int): amount of cards the player has
     """
+    
+    def __init__(self,name, hand=None):
+        """ Initialize Player Object
+
+        Args:
+            name (str): name of Player
+            hand (list): list of dictionaries (cards) the player has
+            hand_amt (int): amount of cards the player has
+        """
+        
+        self.name = name
+        self.hand = hand if hand is not None else []
+        
     def cardchoice(self,match_pile,draw_pile):
         """ 
         
@@ -148,7 +165,13 @@ class ComputerPlayer(HumanPlayer):
         # One Turn
         # Player selects card to match card on table
         
-        print(f"Your Personal Hand is {self.hand}")
+        
+        if len(self.hand) == 1:
+            # Play the only available card in the hand
+            card = self.hand[0]
+            match_pile.append(card)  
+            if card in self.hand:
+                self.hand.remove(card)
     
         while len(self.hand) > 0:
 
@@ -162,7 +185,6 @@ class ComputerPlayer(HumanPlayer):
             
             # Starting game, so we do not want to pop, bc theres only one card in match pile
             card_on_table = match_pile[-1]
-
             
             
             
@@ -228,7 +250,9 @@ class ComputerPlayer(HumanPlayer):
                 match_pile.append(matched_cards[card_position])
                 if matched_cards[card_position] in self.hand:
                     self.hand.remove(matched_cards[card_position])
+                
                 return matched_cards[card_position]  
+
 
 
 class Game:
@@ -265,15 +289,24 @@ class Game:
     
     # Purpose of this method is to allow the human and computer player
     # to play together until a player has no cards left
-    def turn(self, players, card, draw, match, direction):
+    def tournament(self, player_list,draw_pile, match_pile, direction):
         
         card = deck.pop() 
         match_pile.append(card)
         draw_pile = deck.copy()
-        
-        
-        P1.cardchoice(self.match_pile, self.draw_pile)
-        
-        P2.cardchoice(self.match_pile, self.draw_pile)
+     
+        count = 0
+        while count >= 0:
+            for player in player_list:
+                count+=1
+                if player:
+                    if len(player.hand)>= 1:
+                        print(f"Round {count}\n")
+                        print(f"\n{player.name}'s turn\n")
+                        player.cardchoice(match_pile, draw_pile)
+                        if len(player.hand) == 0:
+                            count = -1
+                            print(f"{player.name} wins!")
+                            break
 
         
