@@ -128,7 +128,39 @@ class HumanPlayer:
                 match_pile.append(matched_cards[card_position])  
                 if matched_cards[card_position] in self.hand:
                     self.hand.remove(matched_cards[card_position])
-                return matched_cards[card_position]  
+                return matched_cards[card_position]
+    
+    def plus_two(self, draw_pile, match_pile):
+        table = match_pile[-1]
+        for card in self.hand:
+            if card["Color"] == table["Color"]:
+                match_pile.append(card)
+                for card in match_pile:
+                    if card["Function"] == "+2":
+                        print(f"person adds two cards!")
+                        if len(draw_pile) > 0:
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                        else:
+                            print(f"Draw pile is empty!")
+                    else: 
+                        print(f"This card doesn't add two!")
+            elif card["Function"] == table["Function"]:
+                match_pile.append(card)
+                for card in match_pile:
+                    if card["Function"] == "+2":
+                        print(f"person adds two cards!")
+                        if len(draw_pile) > 0:
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                        else:
+                            print(f"Draw pile is empty!")
+                    else: 
+                        print(f"This card doesn't add two!")  
             
         
 class ComputerPlayer:
@@ -251,7 +283,39 @@ class ComputerPlayer:
                 if matched_cards[card_position] in self.hand:
                     self.hand.remove(matched_cards[card_position])
                 
-                return matched_cards[card_position]  
+                return matched_cards[card_position]
+    
+    def plus_two(self, draw_pile, match_pile):
+        table = match_pile[-1]
+        for card in self.hand:
+            if card["Color"] == table["Color"]:
+                match_pile.append(card)
+                for card in match_pile:
+                    if card["Function"] == "+2":
+                        print(f"person adds two cards!")
+                        if len(draw_pile) > 0:
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                        else:
+                            print(f"Draw pile is empty!")
+                    else: 
+                        print(f"This card doesn't add two!")
+            elif card["Function"] == table["Function"]:
+                match_pile.append(card)
+                for card in match_pile:
+                    if card["Function"] == "+2":
+                        print(f"person adds two cards!")
+                        if len(draw_pile) > 0:
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                            card = draw_pile.pop()
+                            self.hand.append(card)
+                        else:
+                            print(f"Draw pile is empty!")
+                    else: 
+                        print(f"This card doesn't add two!")  
 
 
 
