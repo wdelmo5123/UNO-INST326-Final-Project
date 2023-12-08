@@ -135,7 +135,7 @@ class HumanPlayer:
                 match_pile.append(card)
                 for card in match_pile:
                     if card["Function"] == "+2":
-                        print(f"person adds two cards!")
+                        print(f"{self.name} adds two cards!")
                         if len(draw_pile) > 0:
                             card = draw_pile.pop()
                             self.hand.append(card)
@@ -149,7 +149,7 @@ class HumanPlayer:
                 match_pile.append(card)
                 for card in match_pile:
                     if card["Function"] == "+2":
-                        print(f"person adds two cards!")
+                        print(f"{self.name} adds two cards!")
                         if len(draw_pile) > 0:
                             card = draw_pile.pop()
                             self.hand.append(card)
@@ -271,7 +271,7 @@ class ComputerPlayer:
                 match_pile.append(card)
                 for card in match_pile:
                     if card["Function"] == "+2":
-                        print(f"person adds two cards!")
+                        print(f"{self.name} adds two cards!")
                         if len(draw_pile) > 0:
                             card = draw_pile.pop()
                             self.hand.append(card)
@@ -285,7 +285,7 @@ class ComputerPlayer:
                 match_pile.append(card)
                 for card in match_pile:
                     if card["Function"] == "+2":
-                        print(f"person adds two cards!")
+                        print(f"{self.name} adds two cards!")
                         if len(draw_pile) > 0:
                             card = draw_pile.pop()
                             self.hand.append(card)
@@ -347,6 +347,8 @@ class Game:
             if len(player.hand)>= 1:
                 print(f"Round {count}\n")
                 print(f"\n{player.name}'s turn\n")
+                print(f"{player.name} has {len(player.hand)} cards")
+                
                 player.cardchoice(match_pile, draw_pile)
 
                 if len(player.hand) == 0:
@@ -356,6 +358,8 @@ class Game:
             
             if match_pile[-1]["Function"] == "Reverse":
                 clockwise *= -1  
+            elif match_pile[-1]["Function"] == "+2":
+                player.plus_two(draw_pile, match_pile)
                 
 
 
