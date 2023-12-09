@@ -28,6 +28,12 @@ class HumanPlayer:
         
         self.name = name
         self.hand = hand if hand is not None else []
+    
+    def __str__(self):
+        if len(self.hand) == 0:
+            return f"Length of {self.name}'s hand is 0"
+        else:
+            return f"{self.name}'s hand is {json.dumps(self.hand, sort_keys=False, indent=4)}"
         
     def cardchoice(self,match_pile,draw_pile):
         """ 
@@ -103,7 +109,7 @@ class HumanPlayer:
                         self.hand.append(card1)
                         cards_added+=1
 
-            print(f"\nPersonal Hand is now {json.dumps(self.hand, sort_keys=False, indent=4)}\n")
+            
             # print(f"\nYour Personal hand has {len(self.hand)} cards\n")
             # print(f"You drew {json.dumps(cards_added, sort_keys=False, indent=4)} more cards to your personal hand\n")
 
@@ -326,9 +332,10 @@ class Game:
                 card = deck.pop()
                 player.hand.append(card)
                 # print(f"{player.name} has {len(player.hand)} cards, and is adding a card")
-        
+        print("This is the start of UNO!")
         for player in player_list:
-            print(f"{player.name} has {len(player.hand)} cards")
+            print(f"{player.name} is drawing cards")
+            print(HumanPlayer(player.name, player.hand))
             
         card = deck.pop() 
         match_pile.append(card)
@@ -347,9 +354,12 @@ class Game:
             if len(player.hand)>= 1:
                 print(f"Round {count}\n")
                 print(f"\n{player.name}'s turn\n")
-                print(f"{player.name} has {len(player.hand)} cards")
+                print(f"{player.name} has {len(player.hand)} cards\n")
+                print(HumanPlayer(player.name, player.hand))
                 
                 player.cardchoice(match_pile, draw_pile)
+                print(f"{player.name} has taken a turn")
+                print(HumanPlayer(player.name, player.hand))
 
                 if len(player.hand) == 0:
                     print(f"{player.name} wins!")
