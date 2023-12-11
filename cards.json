@@ -1,114 +1,6 @@
 [
     {
         "Type": "Number",
-        "Color": "Blue",
-        "Number": 1,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 2,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 3,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 4,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 5,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 6,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 7,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 8,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 9,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 1,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 2,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 3,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 4,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 5,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 6,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 7,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 8,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Yellow",
-        "Number": 9,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
         "Color": "Red",
         "Number": 1,
         "Function": "None"
@@ -150,124 +42,76 @@
         "Function": "None"
     },
     {
-        "Type": "Number",
+        "Type": "Special",
         "Color": "Red",
-        "Number": 8,
-        "Function": "None"
+        "Number": null,
+        "Function": "Reverse"
     },
     {
-        "Type": "Number",
+        "Type": "Special",
         "Color": "Red",
-        "Number": 9,
-        "Function": "None"
+        "Number": null,
+        "Function": "Reverse"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 1,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "Reverse"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 2,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "Skip"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 3,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "Skip"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 4,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "Skip"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 5,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "+2"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 6,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "+2"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 7,
-        "Function": "None"
+        "Type": "Special",
+        "Color": "Red",
+        "Number": null,
+        "Function": "+2"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 8,
-        "Function": "None"
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
     },
     {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 9,
-        "Function": "None"
-    },
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    }, 
     {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 1,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 2,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 3,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 4,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 5,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 6,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 7,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 8,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Blue",
-        "Number": 9,
-        "Function": "None"
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
     },
     {
         "Type": "Number",
@@ -312,16 +156,304 @@
         "Function": "None"
     },
     {
-        "Type": "Number",
+        "Type": "Special",
         "Color": "Yellow",
-        "Number": 8,
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": "Yellow",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    },
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    }, 
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 1,
         "Function": "None"
     },
     {
         "Type": "Number",
-        "Color": "Yellow",
-        "Number": 9,
+        "Color": "Blue",
+        "Number": 2,
         "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 3,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 4,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 5,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 6,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 7,
+        "Function": "None"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": "Blue",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    },
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    }, 
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    },
+        {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 1,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 2,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 3,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 4,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 5,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 6,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Green",
+        "Number": 7,
+        "Function": "None"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "Reverse"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "Skip"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": "Green",
+        "Number": null,
+        "Function": "+2"
+    },
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    },
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
+    }, 
+    {
+        "Type": "Special",
+        "Color": null,
+        "Number": null,
+        "Function": "Shield"
     },
     {
         "Type": "Number",
@@ -367,14 +499,86 @@
     },
     {
         "Type": "Number",
-        "Color": "Red",
-        "Number": 8,
+        "Color": "Yellow",
+        "Number": 1,
         "Function": "None"
     },
     {
         "Type": "Number",
-        "Color": "Red",
-        "Number": 9,
+        "Color": "Yellow",
+        "Number": 2,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Yellow",
+        "Number": 3,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Yellow",
+        "Number": 4,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Yellow",
+        "Number": 5,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Yellow",
+        "Number": 6,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Yellow",
+        "Number": 7,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 1,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 2,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 3,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 4,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 5,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 6,
+        "Function": "None"
+    },
+    {
+        "Type": "Number",
+        "Color": "Blue",
+        "Number": 7,
         "Function": "None"
     },
     {
@@ -418,215 +622,5 @@
         "Color": "Green",
         "Number": 7,
         "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 8,
-        "Function": "None"
-    },
-    {
-        "Type": "Number",
-        "Color": "Green",
-        "Number": 9,
-        "Function": "None"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "Reverse"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "+2"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Red",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Blue",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Yellow",
-        "Number": null,
-        "Function": "Skip"
-    },
-    {
-        "Type": "Special",
-        "Color": "Green",
-        "Number": null,
-        "Function": "Skip"
     }
 ]
