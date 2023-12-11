@@ -4,9 +4,6 @@ import random
 from argparse import ArgumentParser
 import sys
 
-# List of cards
-f = open('cards.json')
-deck = json.load(f)
 
 class HumanPlayer:
     """Tracks the human player throughout the game of Uno.
@@ -105,7 +102,6 @@ class HumanPlayer:
             if len(matched_cards) == 0:
                 print(f"{self.name} did not find any special cards.\n")
                 for card in draw_pile:
-                    for card in self.deck:
                         if (card["Type"]!="Special"):
                             match_pile.append(card)
                             break
@@ -560,37 +556,118 @@ class Game:
         return match_pile, player
 
 def main(player_list,deck):
-    """ Set up and play a game of uno.
+    """Play one game of Uno.
+    
+    Primary Author(s): Vinhan Ky
+    Techniques used: with statements
 
     Args:
         filepath (str): path to the JSON file containing the uno cards.
-        """
-    game = Game(player_list, deck = deck)
+    
+    Side effects:
+            Writes to stdout.
+    """
+    
+    with open("cards.json") as f:
+        deck = json.load(f)
+    
+    # Creating a game of Uno
+    game = Game(player_list, deck)
+    match_pile = game.setting_up()
+    
+    cards_added = 0
+    count = 1  
+    matched_cards = []
+    
+    # One single game, capped at 50 turns
+    while (50 >= count >= 1):
 
-    game.tournament(player_list, draw_pile=deck.copy(), match_pile=[],)
+        # To make sure, draw pile is never empty
+        if len(match_pile) == 10:
+            for _ in range(8):
+                game.draw_pile.append(match_pile.pop(0))
+            random.shuffle(game.draw_pile)
+        
+        # Set the player of the turn
+        player = game.player_list[game.next_player]
+        
+        # Determines the winner of the game
+        if len(player.hand) == 1:
+            card = player.hand[0]
+            match_pile.append(card)  
+            if card in player.hand:
+                player.hand.remove(card)
+            if len(player.hand) == 0:
+                if game.clockwise == 1:
+                    print(f"\nTurn #{count} --- Clockwise")
+                elif game.clockwise != 1:
+                    print(f"\nTurn #{count} --- Counter-Clockwise")
+                print(f"\n----- {player.name}'s turn -----")
+                print(f"\n----- {player.name} plays last card and wins!\n")
+            break
+
+        # One single turn of a player
+        if len(player.hand)>= 1:
+            match_pile,player = game.turn(player,cards_added,matched_cards,match_pile,count)
+        
+        # Determine outcome of the three main pecial cards
+        if match_pile[-1]["Function"] == "Reverse":
+            match_pile, player = game.reverse(player, match_pile)
+        elif match_pile[-1]["Function"] == "+2":
+            match_pile, player = game.drawing_two(player,match_pile)
+        elif match_pile[-1]["Function"]=="Skip":
+            match_pile, player = game.skip(player,match_pile)        
+        
+        # Set the next player
+        game.next_player = (game.next_player + game.clockwise) % len(game.player_list)
+        count += 1
 
 
-def parse_args():
+def parse_args(arglist):
+    """Parse command-line arguments.
+    
+    Primary Author(s): Vinhan Ky
+    Techniques used: ArgumentParser class
+    
+    Expect two mandatory arguments:
+        - deck: json file containing UNO card deck
+        - human_name: name of human player 
+    
+    Also allow one optional argument:
+        -c, --computer_player: if specified, include a computer player.
+        Defaults to 1 computer player if not specified.
+    
+    Args:
+        arglist (list of str): arguments from the command line.
+    
+    Returns:
+        namespace: the parsed arguments, as a namespace.
+    
+    """
+    
     parser = ArgumentParser(description="A game of Uno against the computer.")
+    parser.add_argument("deck", type = str, default = "cards.json", 
+                        help = "Path to JSON file containig the UNO card deck (default: card.json)")
     parser.add_argument("human_name", help="Name of the human player,only one human player")
     parser.add_argument("-c", "--computer_players", type=int, default=1,
                         help="Number of computer players")
-    return parser.parse_args()
+    return parser.parse_args(arglist)
 
 if __name__ == "__main__":
-    args = parse_args()
-
- 
+    args = parse_args(sys.argv[1:])
     player_list = [HumanPlayer(args.human_name)]
-
     name_list = ["Bob","Sally","David","Jean","Liz","Jack","Nate","George"]
     
+    if args.computer_players > 4:
+        raise Exception("Max Players is 4")
     
-    for i in range(args.computer_players):
+    if args.computer_players == 0:
+        raise Exception("Min Players is 0")
+    
+    for _ in range(args.computer_players):
         name = random.choice(name_list)
         computer_player = ComputerPlayer(f"{name}")
         name_list.remove(name) 
         player_list.append(computer_player)
-
-
-    main(player_list, deck)  
+        
+    main(player_list, args.deck)  
