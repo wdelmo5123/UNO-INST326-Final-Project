@@ -579,8 +579,8 @@ def main(player_list,deck):
     count = 1  
     matched_cards = []
     
-    # One single game, capped at 50 turns
-    while (50 >= count >= 1):
+    # One single game, capped at 70 turns
+    while (70 >= count >= 1):
 
         # To make sure, draw pile is never empty
         if len(match_pile) == 10:
@@ -662,7 +662,7 @@ if __name__ == "__main__":
         raise Exception("Max Players is 4")
     
     if args.computer_players == 0:
-        raise Exception("Min Players is 0")
+        raise Exception("Min Players is 1")
     
     for _ in range(args.computer_players):
         name = random.choice(name_list)
