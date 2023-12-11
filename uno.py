@@ -230,51 +230,185 @@ class HumanPlayer:
     
     
 class ComputerPlayer(HumanPlayer):
-    """Tracks the names of the player in Uno.
+    """Tracks the computer players in the game.
 
         Attributes:
-        name(str): the player's name. 
-        hand (lst): the personal hand
+        name(str): the computer player's name. 
+        hand (lst): the personal hand of cards
     """
     
     def card_selection(self,match_pile,matched_cards):
-        card_on_table = match_pile[-1]
+        """Randomly selects a card from matched cards.
         
+        Primary Author(s): Matthew Manik
+
+        Args:
+            match_pile (lst): pile from which the player matches the card on top
+            matched_cards (lst): list of matched cards from the player's personal hand
+            
+        Side effects:
+            Writes to stdout.
+        """
+        
+        # Out of the player's matched cards, computer randomly chooses a card to play.
+        match_pile[-1]
         if len(matched_cards)>=1:
             position = random.randint(0, len(matched_cards)-1)
             card_position = int(position)
-            
             print(f"{self.name}'s turn to choose a card")
-            # print(f"{self.name}'s hand is {json.dumps(self.hand, sort_keys=False, indent=4)}")
-            # print(f"{self.name}'s matched_cards is {json.dumps(matched_cards, sort_keys=False, indent=4)}")
-            
-            print(f"\nTo match the card: {card_on_table}, {self.name} selected is {matched_cards}\n")
-            
+            print(f"\nTo match the card: {match_pile[-1]}, the card {self.name} "
+                  f"selected is {matched_cards[card_position]}\n")
+
             match_pile.append(matched_cards[card_position])
             if matched_cards[card_position] in self.hand:
                 self.hand.remove(matched_cards[card_position])
         elif len(matched_cards) == 0:
-            print("why is len matched cards = 0?")
-            
-      
+            print("Error: Matched Cards is 0")
 
 class Game:
-    """Provide information on the current state of the game. Used in the
-    Player.card_choice() method.
+    """Uno Game: Defense Editon. 
     
     Attributes:
-    draw_pile(lst): deck of cards from which the player draws cards from
-    match_pile(lst): deck of cards which players have matched
-    hand_amt (int): amount of cards the player has
-    
+    players (lst): list of HumanPlayer and ComputerPlayer instances
+    deck (lst): original standard deck of cards
+    draw_pile (list): deck of cards from which the player draws cards from. 
+    gamemaster (bool, optional): allows user to see or not to see the 
+                                 player's hand during the game. Defaults to False.
+    next_player (int, optional): position of the next player according to the player list
+    clockwise (int, optional): direction of the game. Defaults to 1.
     """
     
-    def __init__(self, players, deck, card = {}, draw_pile = [], match_pile=[]):
-        self.players = players
+    def __init__(self, player_list, deck,gamemaster=False, next_player = 0, clockwise = 1):
+        """Creates a single gamestate.
+
+        Primary Author(s): William Delmo, Vinhan Ky, Matthew Manik
+        
+        Args:
+            players (lst): list of HumanPlayer and ComputerPlayer instances
+            deck (lst): original standard deck of cards
+            draw_pile (list, optional): deck of cards from which the player draws cards from. Defaults to [].
+            match_pile (list, optional): deck of cards which players have matched. Defaults to [].
+            gamemaster (bool, optional): allows user to see or not to see the 
+                                         player's hand during the game. Defaults to False.
+        """
+        self.player_list = player_list
         self.deck = deck
-        self.card = card
-        self.draw_pile = draw_pile
-        self.match_pile = match_pile
+        self.draw_pile = deck.copy()
+        self.gamemaster = gamemaster
+        self.next_player = next_player
+        self.clockwise = clockwise
+
+    def setting_up(self):
+        """Setting up Uno game.
+        
+        Primary Author(s): William Delmo, Vinhan Ky, Matthew Manik
+
+        Args:
+            player_list (lst): list of HumanPlayer and ComputerPlayers
+            draw_pile (lst): deck of cards from which the player draws cards from
+            match_pile (lst): deck of cards which players have matched
+            
+        Side effects:
+            Writes to stdout.
+        """
+        # Shuffle the deck
+        match_pile = []
+        random.shuffle(self.deck)
+        print("----- This is the start of UNO! -----\n")
+        
+        # Ask user if they want to see the other player's hands for debugging purposes
+        while True:
+            try:
+                oversee_game = input("Would you like to see the player's hand during the game? (y/n)")
+                if oversee_game == "y":
+                    self.gamemaster = True
+                    break
+                elif oversee_game == "n":
+                    self.gamemaster = False
+                    break
+                else:
+                    print(f"\nChoose either yes or no (y/n)")
+            except ValueError:
+                print("\nError: Invalid")
+        
+        if self.gamemaster == True:
+            print("\nYou chose to oversee the game and see the other players' hands!\n")
+        elif self.gamemaster == False:
+            print("\nYou chose not to see the other players' hands during the game!\n")
+        
+        # Distribute cards to players
+        print(f"\nStarting in clockwise, the order of players are:")
+        order = 0
+        for player in self.player_list:
+            order +=1
+            print(f"{order}. {player.name}")
+            for _ in range(7):
+                card = self.deck.pop()
+                player.hand.append(card)
+
+        for player in self.player_list:
+            if self.player_list.index(player) == 0:
+                print(f"\n{player.name}, you are dealt 7 cards")
+            else:
+                print(f"{player.name} is dealt 7 cards")
+            
+        # First card to match cannot be a special card
+        for card in self.deck:
+            if (card["Type"]!="Special"):
+                match_pile.append(card)
+                break
+            else:
+                continue
+        
+        match_pile.append(card)
+        return match_pile
+    
+    def reverse(self,player,match_pile):
+        """Reverses the direction of the game.
+        
+        Primary Author(s): William Delmo, Vinhan Ky, Matthew Manik
+
+        Args:
+            player (class_instance): player of the game
+            player_list (lst): list of HumanPlayer and ComputerPlayers
+            match_pile (lst): deck of cards which players have matched
+
+        Returns:
+            match_pile (lst): deck of cards which players have matched
+            player (class_instance): player of the game
+            
+        Side effects:
+            Writes to stdout.
+        """
+        shield = 0
+        print(f"{player.name} played a Reverse!")
+        
+        # Set the player to receive the Reverse
+        position = (self.next_player + self.clockwise) % len(self.player_list)
+        player = self.player_list[position]
+        
+        for card in player.hand:
+            # If the receiving player has the Shield in their hand, they can block the Reverse.
+            if card["Function"]=="Shield":
+                    print(f"{player.name} plays the Shield and blocked the Reverse!")
+                    match_pile.append(card)
+                    player.hand.remove(card)
+                    shield += 1
+                    player = self.player_list[self.next_player]
+
+                    # The Shield maintains the current direction of the game.
+                    if self.clockwise == 1:
+                        print(f"The direction remains Clockwise")
+                    elif self.clockwise != 1:
+                        print(f"The direction remains Counter-Clockwise")
+                    break
+            else:
+                continue
+        
+        # If the receiving player player doesn't have the Shield, then the Reverse goes as normal
+        if shield == 0:
+            self.clockwise *= -1  
+        return match_pile, player
 
     def drawing_two(self,player,match_pile):
         """Drawing two cards for next player in the game of UNO.
@@ -320,125 +454,110 @@ class Game:
         
         return match_pile, player
     
-    # Purpose of this method is to allow the human and computer player
-    # to play together until a player has no cards left
-    def tournament(self, player_list,draw_pile, match_pile):
-        random.shuffle(deck)
-        count = 0
-        for player in player_list:
-            for _ in range(7):
-                card = deck.pop()
-                player.hand.append(card)
-                # print(f"{player.name} has {len(player.hand)} cards, and is adding a card")
+    def skip(self,player,match_pile):
+        """Skips the next player's turn.
         
-        print("----- This is the start of UNO! -----\n")
-        for player in player_list:
-            if player_list.index(player) == 0:
-                print(f"{player.name}, you are dealt 7 cards")
+        Primary Author(s): William Delmo, Vinhan Ky, Matthew Manik
+
+        Args:
+            player (class_instance): player of the game
+            match_pile (lst): deck of cards which players have matched
+
+        Returns:
+            match_pile (lst): deck of cards which players have matched
+            player (class_instance): player of the game
+            
+        Side effects:
+            Writes to stdout.
+        """
+        
+        # Set player to receive the Skip
+        print(f"----- {player.name} played a Skip! -----")
+        shield = 0
+        position = (self.next_player + self.clockwise) % len(self.player_list)
+        player = self.player_list[position]
+        
+        for card in player.hand:
+            # If the receiving player has the Shield in their hand, they can block the Skip.
+            if card["Function"]=="Shield":
+                print(f"{player.name} plays the Shield and blocked the Skip!")
+                match_pile.append(card)
+                player.hand.remove(card)
+                shield += 1
+                print(f"It remains {player.name}'s turn!")
+                break
             else:
-                print(f"{player.name} is dealt 7 cards")
+                continue
         
-            
-        card = deck.pop() 
-        match_pile.append(card)
-        draw_pile = deck.copy()
+        # If the receiving player player doesn't have the Shield, then they are skipped
+        if shield == 0:
+            self.next_player = (self.next_player + self.clockwise) % len(self.player_list)
+            print(f"----- {self.player_list[self.next_player].name}'s turn was skipped! -----\n")
+        
+        return match_pile, player
+      
+                
+    def turn(self,player,cards_added,matched_cards,match_pile,count):
+        """A player's turn.
+        
+        Primary Author(s): Matthew Manik
+        Techniques used: Sequence Unpacking
 
-        cards_added = 0
-        count = 1
-        next_player = 0
-        clockwise = 1  
-        matched_cards = []
+        Args:
+            player (class_instance): player of the game
+            cards_added (int): number of cards added to the list
+            matched_cards (lst): list of matched cards from the player's personal hand
+            match_pile (lst): deck of cards which players have matched
+            draw_pile (lst): deck of cards from which the player draws cards from.
+            count (int): Number of turns
 
-        while count >= 1:
-            
-            if len(match_pile) == 10:
-                for _ in range(8):
-                    draw_pile.append(match_pile.pop(0))
-                random.shuffle(draw_pile)
-            
-            
-            player = player_list[next_player]
-            
-            if len(player.hand) == 1:
-                # Play the only available card in the hand
-                card = player.hand[0]
-                match_pile.append(card)  
-                if card in player.hand:
-                    player.hand.remove(card)
-                if len(player.hand) == 0:
-                    if clockwise == 1:
-                        print(f"\nTurn #{count} --- Clockwise")
-                    elif clockwise != 1:
-                        print(f"\nTurn #{count} --- Counter-Clockwise")
-                    print(f"\n----- {player.name}'s turn -----")
-                    print(f"\n----- {player.name}'s plays last card and wins!\n")
-                    break
-            
-                    
-            if len(player.hand)>= 1:
-                if clockwise == 1:
-                    print(f"\nTurn #{count} --- Clockwise")
-                elif clockwise != 1:
-                    print(f"\nTurn #{count} --- Counter-Clockwise")
-                   
-                    
-                print(f"\n----- {player.name}'s turn -----\n")
-                print(f"----- {player.name} has {len(player.hand)} cards -----\n")
+        Returns:
+            match_pile (lst): deck of cards which players have matched
+            player (class_instance): player of the game
+        
+        Side effects:
+            Writes to stdout.
+        """
+        if self.clockwise == 1:
+            print(f"\nTurn #{count} --- Clockwise")
+        elif self.clockwise != 1:
+            print(f"\nTurn #{count} --- Counter-Clockwise")
+        
+        print(f"\n----- {player.name}'s turn -----\n")
+        print(f"----- {player.name} has {len(player.hand)} cards -----\n")
+        
+        # Player checks hand for match
+        match_in_hand = player.checking_hand(match_pile, self.draw_pile)
+        
+        if self.gamemaster == True:
+            print(player)
+        elif self.gamemaster == False:
+            if self.player_list.index(player) == 0:
+                print(player)
+        
+        # Player can draw to find a matched card
+        matched_cards, cards_added = player.draw_to_match(match_in_hand, match_pile, self.draw_pile)
+        
+        if (len(matched_cards) != 0) and (self.player_list.index(player) == 0):
+            print(f"{player.name} found {len(matched_cards)} matches in their hand.\n")
+        
+        if cards_added != 0:
+            print(f"{player.name} drew {cards_added} more cards.\n")
+        
+        if self.player_list.index(player) == 0:
+            if len(matched_cards) == 1:
+                print(f"{player.name}'s matched card is {json.dumps(matched_cards, sort_keys=False, indent=4)}\n")
+            elif len(matched_cards) > 1:
+                print(f"{player.name}'s matched cards are {json.dumps(matched_cards, sort_keys=False, indent=4)}\n")
+        
+        # Player selects a card from their list of matched cards
+        player.card_selection(match_pile,matched_cards)
+        
+        # Print player's hand using str method
+        if self.player_list.index(player) == 0:
+            print(player)
                 
-                if player_list.index(player) == 0:
-                    print(player)
-                
-                # Drawing Cards
-                matched_cards, cards_added = player.cardchoice(match_pile, draw_pile)
-                
-                if (len(matched_cards) != 0) and (player_list.index(player) == 0):
-                    print(f"{player.name} found {len(matched_cards)} matches in their hand.\n")
-                
-                if cards_added != 0:
-                    print(f"{player.name} drew {cards_added} more cards.\n")
-                
-                # Printing the player's matched cards
-                
-                if player_list.index(player) == 0:
-                    if len(matched_cards) == 1:
-                        print(f"{player.name}'s matched card is {json.dumps(matched_cards, sort_keys=False, indent=4)}\n")
-                    elif len(matched_cards) > 1:
-                        print(f"{player.name}'s matched cards are {json.dumps(matched_cards, sort_keys=False, indent=4)}\n")
-                    
-                # Selecting Card
-                player.card_selection(match_pile,matched_cards)
-                
-                if player_list.index(player) == 0:
-                    print(player)
-
-            
-            if match_pile[-1]["Function"] == "Reverse":
-                clockwise *= -1  
-                
-            if match_pile[-1]["Function"] == "+2":
-                draw_two = player.plus_two(draw_pile, match_pile)
-                
-                if clockwise == 1:
-                    
-                    position = (next_player + clockwise) % len(player_list)
-                    player = player_list[position]
-                    player.hand.extend(draw_two)
-                    print(f"----- {player.name} draws 2 more cards\n")  
-                elif clockwise != 1:
-                    position = (next_player + clockwise) % len(player_list)
-                    player = player_list[position]
-                    player.hand.extend(draw_two)
-                    print(f"----- {player.name} draws 2 more cards\n")
-                
-            
-            if match_pile[-1]["Function"]=="Skip":
-                next_player = (next_player + clockwise) % len(player_list)
-                print(f"----- {player.name} played a Skip! -----")
-                print(f"----- {player_list[next_player].name}'s turn was skipped! -----\n")
-                
-            next_player = (next_player + clockwise) % len(player_list)
-            
-            count += 1
+        return match_pile, player
 
 def main(player_list,deck):
     """ Set up and play a game of uno.
